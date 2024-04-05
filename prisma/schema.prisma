@@ -15,6 +15,9 @@ model Post {
   author   User      @relation(fields: [authorId], references: [id])
   authorId String    @db.ObjectId
   comments Comment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  viewCount Int      @default(0)
 }
 
 model User {
@@ -23,6 +26,8 @@ model User {
   name    String?
   address Address?
   posts   Post[]
+  followers Int @default(0)
+  following Int @default(0)
 }
 
 model Comment {
