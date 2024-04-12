@@ -28,6 +28,16 @@ model User {
   posts   Post[]
   followers Int @default(0)
   following Int @default(0)
+  validation Validation?
+  role       Role   @default(user)
+}
+model Validation {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    token        String   @unique
+    token_expiry DateTime
+    randomCode   String
+    user         User     @relation(fields: [userId], references: [id])
+    userId       String   @unique @db.ObjectId
 }
 
 model Comment {
@@ -43,4 +53,11 @@ type Address {
   city   String
   state  String
   zip    String
+}
+enum Role {
+  user
+  admin
+  talent
+  creative
+  client
 }
